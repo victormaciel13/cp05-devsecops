@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal Arcanjo | Pipeline DevSecOps (CP05)</title>
+  <style>
+    :root {
+      --papel: #F3F5F8;
+      --tinta: #16223A;
+      --suave: #56637D;
+      --linha: #CBD3DF;
+      --barra: #B4232F;
+      --passa: #1E6E48;
+      --superficie: #FFFFFF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --papel: #121A2B;
+        --tinta: #E6EBF3;
+        --suave: #9BA8BF;
+        --linha: #2E3B55;
+        --barra: #F0707A;
+        --passa: #6FCF9F;
+        --superficie: #1A2438;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--papel);
+      color: var(--tinta);
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+      line-height: 1.55;
+    }
+    main { max-width: 760px; margin: 0 auto; padding: 56px 24px 72px; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 1.15rem; color: var(--suave); margin: 0 0 40px; }
+    .aluno {
+      border-left: 4px solid var(--tinta);
+      padding: 8px 16px;
+      margin-bottom: 48px;
+      background: var(--superficie);
+    }
+    .aluno p { margin: 2px 0; }
+    h2 { font-size: 1.35rem; margin: 48px 0 16px; }
+    ol.portoes { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+    ol.portoes li {
+      counter-increment: p;
+      position: relative;
+      padding: 18px 20px 18px 64px;
+      background: var(--superficie);
+      border: 1px solid var(--linha);
+      margin-bottom: -1px;
+    }
+    ol.portoes li::before {
+      content: counter(p);
+      position: absolute; left: 20px; top: 18px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--tinta); color: var(--papel);
+      display: grid; place-items: center; font-weight: 700; font-size: 0.9rem;
+    }
+    ol.portoes strong { display: block; font-size: 1.05rem; }
+    .barra { color: var(--barra); font-weight: 600; }
+    .passa { color: var(--passa); font-weight: 600; }
+    footer { margin-top: 56px; font-size: 0.9rem; color: var(--suave); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Nenhum commit passa sem revista.</h1>
+    <p class="lead">Depois do vazamento de uma chave de API num commit público, a Arcanjo SA exige um pipeline de segurança em todo repositório. Este site é o repositório de referência.</p>
+
+    <div class="aluno">
+      <p><strong>Nome:</strong> Victor Camargo Maciel</p>
+      <p><strong>RM:</strong> 98384 &nbsp;|&nbsp; <strong>Turma:</strong> 4ESPX</p>
+      <p><strong>Atividade:</strong> CP05, DevSecOps and Cloud Computing</p>
+    </div>
+
+    <h2>Os portões de cada push</h2>
+    <ol class="portoes">
+      <li>
+        <strong>Gitleaks</strong>
+        Varre o histórico do Git atrás de senhas, tokens e chaves de API.
+        Encontrou um segredo: <span class="barra">pipeline barrado</span>.
+      </li>
+      <li>
+        <strong>Semgrep</strong>
+        Análise estática do código-fonte (SAST). Procura padrões perigosos, como
+        <code>eval()</code> executando texto vindo do usuário.
+        Encontrou: <span class="barra">pipeline barrado</span>.
+      </li>
+      <li>
+        <strong>Código limpo</strong>
+        Os dois portões passaram: <span class="passa">o commit segue para build e deploy</span>.
+      </li>
+    </ol>
+
+    <h2>Por que isso importa</h2>
+    <p>Um segredo que chega ao GitHub precisa ser considerado comprometido, mesmo que o commit seja apagado depois: ele continua no histórico e em clones. Barrar antes é muito mais barato do que revogar e investigar depois.</p>
+    <p>Já o <code>eval()</code> transforma qualquer texto em código executável. Se esse texto vem da URL ou de um formulário, um atacante consegue rodar o JavaScript que quiser no navegador da vítima (XSS).</p>
+
+    <footer>Imagem servida por nginx:alpine em container Docker. Evolução do Portal Arcanjo do CP04.</footer>
+  </main>
+</body>
+</html>
